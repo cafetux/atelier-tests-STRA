@@ -25,6 +25,14 @@ public class Client {
         this.prenom = prenom;
         this.accountType = accountType;
     }
+    public Client(String email, String nom, String prenom, AccountType accountType,DateTime activationDate) {
+        this.email = email;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.accountType = accountType;
+        this.activationDate=activationDate;
+    }
+
 
     public String getEmail() {
         return email;

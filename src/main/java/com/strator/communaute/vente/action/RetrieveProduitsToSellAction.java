@@ -1,5 +1,6 @@
 package com.strator.communaute.vente.action;
 
+import com.strator.communaute.client.repository.ClientsMagasin;
 import com.strator.communaute.utils.commerce.Prix;
 import com.strator.communaute.catalogue.model.ProduitCatalogue;
 import com.strator.communaute.catalogue.repository.CatalogueProduits;
@@ -9,6 +10,7 @@ import com.strator.communaute.client.model.Client;
 import com.strator.communaute.utils.math.Percentage;
 import com.strator.communaute.vente.model.ProduitToSell;
 import com.strator.communaute.vente.model.TvaType;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -22,11 +24,15 @@ import static com.strator.communaute.vente.model.TvaType.*;
 @Component
 public class RetrieveProduitsToSellAction {
 
-
+    @Autowired
     private CatalogueProduits produitsRepository;
 
-    public List<ProduitToSell> retrieveAllFor(Client client) {
+    @Autowired
+    private ClientsMagasin clientsMagasin;
 
+    public List<ProduitToSell> retrieveAllFor(String clientEmail) {
+
+        Client client = clientsMagasin.retrieveByEmail(clientEmail);
         if(!client.isActif()){
             throw new UserInactifException(client);
         }
