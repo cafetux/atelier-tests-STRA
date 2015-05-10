@@ -1,10 +1,10 @@
-package com.strator.communaute;
+package com.strator.communaute.vente.model;
 
 /**
  * Types de com.strator.communaute.TVA applicables
  * http://www.economie.gouv.fr/cedef/taux-tva-france-et-union-europeenne
  */
-public enum TVA {
+public enum TvaType {
     /**
      * pour la majorité des ventes de biens et des prestations de services :
      * il s'applique à tous les produits ou services pour lesquels aucun autre taux n'est expressément prévu

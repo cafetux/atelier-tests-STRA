@@ -1,7 +1,7 @@
 package com.strator.communaute.catalogue.repository;
 
-import com.strator.communaute.Prix;
-import com.strator.communaute.catalogue.ProduitCatalogue;
+import com.strator.communaute.utils.commerce.Prix;
+import com.strator.communaute.catalogue.model.ProduitCatalogue;
 import org.springframework.stereotype.Repository;
 
 import java.util.Arrays;

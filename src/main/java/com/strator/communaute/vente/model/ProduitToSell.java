@@ -1,4 +1,6 @@
-package com.strator.communaute;
+package com.strator.communaute.vente.model;
+
+import com.strator.communaute.utils.commerce.Prix;
 
 /**
  * Un produit à vendre
@@ -26,9 +28,15 @@ public class ProduitToSell {
     /**
      *  La remise à appliquer sur le prix de vente TTC du produit
      */
-    private Prix remiseSurLeTTC;
+    private Prix prixTTCRemise;
 
-
+    public ProduitToSell(String reference, String libelle, Prix prixHT, Prix prixTTC, Prix prixTTCRemise) {
+        this.reference = reference;
+        this.libelle = libelle;
+        this.prixHT = prixHT;
+        this.prixTTC = prixTTC;
+        this.prixTTCRemise = prixTTCRemise;
+    }
 
     public String getReference() {
         return reference;
@@ -46,7 +54,7 @@ public class ProduitToSell {
         return prixTTC;
     }
 
-    public Prix getRemiseSurLeTTC() {
-        return remiseSurLeTTC;
+    public Prix getPrixTTCRemise() {
+        return prixTTCRemise;
     }
 }

@@ -1,6 +1,6 @@
 package com.strator.communaute.catalogue.repository;
 
-import com.strator.communaute.catalogue.ProduitCatalogue;
+import com.strator.communaute.catalogue.model.ProduitCatalogue;
 
 import java.util.List;
 

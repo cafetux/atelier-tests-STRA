@@ -17,5 +17,5 @@ public enum CategorieProduit {
     // 20%
     HYGIENE_DENTAIRE,
     // 20%
-
+    CONFISERIE;
 }

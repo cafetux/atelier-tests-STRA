@@ -1,6 +1,6 @@
-package com.strator.communaute.client;
+package com.strator.communaute.client.exception;
 
-import com.strator.communaute.Client;
+import com.strator.communaute.client.model.Client;
 
 /**
  * Exception remontée lorsqu'un client n'est pas actif

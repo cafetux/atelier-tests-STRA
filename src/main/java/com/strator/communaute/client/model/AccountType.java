@@ -1,4 +1,4 @@
-package com.strator.communaute;
+package com.strator.communaute.client.model;
 
 /**
  * Le type de compte utilisateur

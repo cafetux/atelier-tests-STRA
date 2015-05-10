@@ -1,7 +1,6 @@
-package com.strator.communaute.catalogue;
+package com.strator.communaute.catalogue.model;
 
-import com.strator.communaute.Prix;
-import com.strator.communaute.catalogue.model.CategorieProduit;
+import com.strator.communaute.utils.commerce.Prix;
 
 /**
  * Un produit du catalogue
