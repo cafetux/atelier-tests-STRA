@@ -57,4 +57,15 @@ public class ProduitToSell {
     public Prix getPrixTTCRemise() {
         return prixTTCRemise;
     }
+
+    @Override
+    public String toString() {
+        return "ProduitToSell{" +
+                "reference='" + reference + '\'' +
+                ", libelle='" + libelle + '\'' +
+                ", prixHT=" + prixHT +
+                ", prixTTC=" + prixTTC +
+                ", prixTTCRemise=" + prixTTCRemise +
+                '}';
+    }
 }
