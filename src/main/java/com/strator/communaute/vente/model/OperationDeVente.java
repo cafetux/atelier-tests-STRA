@@ -1,6 +1,7 @@
 package com.strator.communaute.vente.model;
 
-import java.time.LocalDateTime;
+import org.joda.time.LocalDateTime;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +16,7 @@ public class OperationDeVente {
 
     public OperationDeVente(String clientEmail){
         this.clientEmail=clientEmail;
-        this.dateDeLaTransaction = LocalDateTime.now();
+        this.dateDeLaTransaction = new LocalDateTime();
     }
 
     public void addRerenceProduit(String reference){

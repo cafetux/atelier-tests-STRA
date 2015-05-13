@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Built-By: cafetux
+Build-Jdk: 1.6.0_35
+Built-By: fmaury
 Created-By: IntelliJ IDEA
-Build-Jdk: 1.8.0_40
 
