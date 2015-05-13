@@ -53,4 +53,15 @@ public class Client {
     public boolean isActif(){
         return activationDate!=null;
     }
+
+    @Override
+    public String toString() {
+        return "Client{" +
+                "email='" + email + '\'' +
+                ", nom='" + nom + '\'' +
+                ", prenom='" + prenom + '\'' +
+                ", accountType=" + accountType +
+                ", activationDate=" + activationDate +
+                '}';
+    }
 }

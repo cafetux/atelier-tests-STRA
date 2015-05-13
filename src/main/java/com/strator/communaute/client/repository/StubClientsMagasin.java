@@ -14,6 +14,7 @@ public class StubClientsMagasin implements ClientsMagasin{
 
     @Override
     public Client retrieveByEmail(String email) {
+        wait_for_connection();
         if(email.contains("inactif")){
             return inactifUser();
         }
@@ -35,5 +36,13 @@ public class StubClientsMagasin implements ClientsMagasin{
     private Client inactifUser() {
         Client client = new Client("inactif@monsite.fr","Durand","Marc", AccountType.STANDART);
         return client;
+    }
+
+    private void wait_for_connection() {
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

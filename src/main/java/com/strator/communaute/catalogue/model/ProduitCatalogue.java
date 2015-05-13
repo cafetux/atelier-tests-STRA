@@ -46,4 +46,16 @@ public class ProduitCatalogue {
     public CategorieProduit getCategorieProduit() {
         return categorieProduit;
     }
+
+    @Override
+    public String toString() {
+        return "ProduitCatalogue{" +
+                "reference='" + reference + '\'' +
+                ", libelle='" + libelle + '\'' +
+                ", prixAchat=" + prixAchat +
+                ", marge=" + marge +
+                ", categorieProduit=" + categorieProduit +
+                ", actif=" + actif +
+                '}';
+    }
 }

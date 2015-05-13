@@ -34,8 +34,17 @@ public class StubCatalogueProduits implements CatalogueProduits {
     }
 
     @Override
-    public List<ProduitCatalogue> retrieveAll(){
+    public List<ProduitCatalogue> retrieveAll() {
+        wait_for_connection();
         return produitCatalogues;
+    }
+
+    private void wait_for_connection() {
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 }

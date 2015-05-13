@@ -41,4 +41,11 @@ public class Prix {
     public Prix decreaseBy(Percentage percentage) {
         return new Prix(percentage.applyToDecrease(this.prix));
     }
+
+    @Override
+    public String toString() {
+        return "Prix{" +
+                "prix=" + prix +
+                '}';
+    }
 }
