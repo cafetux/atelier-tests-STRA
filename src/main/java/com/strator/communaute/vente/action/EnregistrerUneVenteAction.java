@@ -37,8 +37,7 @@ public class EnregistrerUneVenteAction {
 
             OperationDeVente opv = new OperationDeVente(clientEmail);
 
-            for (int i = produits.size(); i > 0; i--) {
-                opv.addRerenceProduit(produits.get(i).getReference());
+            for (int i = produits.size()-1; i > 0; opv.addRerenceProduit(produits.get(i--).getReference())) {
             }
 
             transactionRepository.save(opv);
