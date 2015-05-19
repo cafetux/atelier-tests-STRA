@@ -1,4 +1,4 @@
-package com.strator.communaute.vente.action;
+package com.strator.communaute.vente_de_produits.action;
 
 import com.strator.communaute.client.repository.ClientsMagasin;
 import com.strator.communaute.utils.commerce.Prix;
@@ -8,15 +8,15 @@ import com.strator.communaute.client.exception.UserInactifException;
 import com.strator.communaute.client.model.AccountType;
 import com.strator.communaute.client.model.Client;
 import com.strator.communaute.utils.math.Percentage;
-import com.strator.communaute.vente.model.ProduitToSell;
-import com.strator.communaute.vente.model.TvaType;
+import com.strator.communaute.vente_de_produits.model.ProduitToSell;
+import com.strator.communaute.vente_de_produits.model.TvaType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.strator.communaute.vente.model.TvaType.*;
+import static com.strator.communaute.vente_de_produits.model.TvaType.*;
 
 /**
  * Action pour retrouver les produits à vendre
@@ -110,6 +110,5 @@ public class RetrieveProduitsToSellAction {
         Prix prixAPayer = prixDeVenteTTC.decreaseBy(new Percentage(discountInPercentage));
         return new ProduitToSell(produitCatalogue.getReference(),produitCatalogue.getLibelle(),prixDeVenteHT,prixDeVenteTTC,prixAPayer);
     }
-
 
 }

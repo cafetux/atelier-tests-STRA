@@ -1,25 +1,29 @@
-package com.strator.communaute.vente.model;
+package com.strator.communaute.vente_de_produits.model;
 
 import org.joda.time.LocalDateTime;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
- * Created by cafetux on 12/05/2015.
+ * Une commande, passée par un client.
+ * Contient une liste de produits et les quantités vendues
  */
-public class OperationDeVente {
+public class Commande {
 
+    private String reference;
     private String clientEmail;
     private LocalDateTime dateDeLaTransaction;
-    private List<String> produitsAchetes = new ArrayList<String>();
+    private List<LigneCommande> produitsAchetes = new ArrayList<LigneCommande>();
 
-    public OperationDeVente(String clientEmail){
+    public Commande(String clientEmail){
+        this.reference = UUID.randomUUID().toString().replace("-","");
         this.clientEmail=clientEmail;
         this.dateDeLaTransaction = new LocalDateTime();
     }
 
-    public void addRerenceProduit(String reference){
+    public void addRerenceProduit(LigneCommande reference){
         this.produitsAchetes.add(reference);
     }
 
@@ -31,8 +35,12 @@ public class OperationDeVente {
         return dateDeLaTransaction;
     }
 
-    public List<String> getProduitsAchetes() {
+    public List<LigneCommande> getProduitsAchetes() {
         return produitsAchetes;
+    }
+
+    public String getReference() {
+        return reference;
     }
 
     @Override

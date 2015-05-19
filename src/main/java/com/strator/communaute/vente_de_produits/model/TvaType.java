@@ -1,4 +1,4 @@
-package com.strator.communaute.vente.model;
+package com.strator.communaute.vente_de_produits.model;
 
 /**
  * Types de com.strator.communaute.TVA applicables

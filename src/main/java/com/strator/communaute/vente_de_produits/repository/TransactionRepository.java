@@ -1,6 +1,6 @@
-package com.strator.communaute.vente.repository;
+package com.strator.communaute.vente_de_produits.repository;
 
-import com.strator.communaute.vente.model.OperationDeVente;
+import com.strator.communaute.vente_de_produits.model.Commande;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 public class TransactionRepository {
 
 
-    public void save(OperationDeVente operationDeVente){
+    public void save(Commande operationDeVente){
          System.out.println(operationDeVente);
     }
 
