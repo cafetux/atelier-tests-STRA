@@ -1,14 +1,18 @@
 package com.strator.communaute.data;
 
+import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.google.common.collect.Multimap;
 import com.strator.communaute.catalogue.model.CategorieProduit;
 import com.strator.communaute.catalogue.model.ProduitCatalogue;
 import com.strator.communaute.client.model.AccountType;
 import com.strator.communaute.client.model.Client;
 import com.strator.communaute.fidelite.model.ActionRecompensee;
 import com.strator.communaute.utils.commerce.Prix;
+import com.strator.communaute.vente_de_produits.model.Commande;
 import org.joda.time.DateTime;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,16 +23,17 @@ import static com.strator.communaute.catalogue.model.CategorieProduit.*;
 /**
  * Les données de l'appli stubbée
  */
-public class HardCodedDataBase {
+@Repository
+public class HardCodedDataBase implements IDataBase {
 
 
-    private static Map<String,ProduitCatalogue> produitCatalogues = Maps.newConcurrentMap();
-    private static Map<String,Integer> stockProduits = Maps.newConcurrentMap();
-    private static List<ActionRecompensee> actionsFidelite = Lists.newArrayList();
-    private static Map<String,Client> clients = Maps.newConcurrentMap();
+    private Map<String,ProduitCatalogue> produitCatalogues = Maps.newConcurrentMap();
+    private Map<String,Integer> stockProduits = Maps.newConcurrentMap();
+    private List<ActionRecompensee> actionsFidelite = Lists.newArrayList();
+    private Map<String,Client> clients = Maps.newConcurrentMap();
+    private Multimap<String,Commande> commandes = ArrayListMultimap.create();
 
-
-    static{
+    {
 
         add(produit("71e8e7e5c52a45f682cd23021931d4ea", "Durex feeling sensual x10", 1045, true, 400, PRESERVATIF),0);
         add(produit("b8ec935decba42bfb4551b357ef04be1", "Durex Play", 750, true, 150, PRESERVATIF),5);
@@ -45,64 +50,56 @@ public class HardCodedDataBase {
         clients.put(createVipUser().getEmail(),createVipUser());
     }
 
-    private static void add(ProduitCatalogue produit, int stock) {
+    private void add(ProduitCatalogue produit, int stock) {
         produitCatalogues.put(produit.getReference(), produit);
         stockProduits.put(produit.getReference(),stock);
     }
 
-    private static ProduitCatalogue produit(String reference, String libelle, long prixAchatCentime, boolean actif, long marge, CategorieProduit categorie) {
+    private ProduitCatalogue produit(String reference, String libelle, long prixAchatCentime, boolean actif, long marge, CategorieProduit categorie) {
        return new ProduitCatalogue(reference,libelle,new Prix(prixAchatCentime),actif,marge,categorie);
     }
 
-    public static List<ProduitCatalogue> getProduits() {
-        wait_for_connection();
+    @Override
+    public List<ProduitCatalogue> getProduits() {
         return new ArrayList(produitCatalogues.values());
     }
 
-    public static ProduitCatalogue getProduit(String reference) {
-        wait_for_connection();
+    @Override
+    public ProduitCatalogue getProduit(String reference) {
         return produitCatalogues.get(reference);
     }
 
-    public static void changeStock(String referenceProduit,int newStock){
-        wait_for_connection();
+    @Override
+    public void changeStock(String referenceProduit, int newStock){
         stockProduits.put(referenceProduit,newStock);
     }
 
-    public static Integer getStock(String reference){
+    @Override
+    public Integer getStock(String reference){
         return stockProduits.get(reference);
     }
 
-    public static Client getClient(String email){
+    @Override
+    public Client getClient(String email){
         return clients.get(email);
     }
 
-    private static void wait_for_connection() {
-        try {
-            Thread.sleep(4000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-    private static void wait_for_connection(int millis) {
-        try {
-            Thread.sleep(millis);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+    @Override
+    public void saveOrder(Commande commande) {
+       commandes.put(commande.getClientEmail(),commande);
     }
 
 
-    private static Client createStandartClient() {
+    private Client createStandartClient() {
         Client client = new Client("normal@monsite.fr","LeGrand","Paul", AccountType.STANDART, new DateTime().minusDays(8));
         return client;
     }
-    private static Client createVipUser() {
+    private Client createVipUser() {
         Client client = new Client("platinium@monsite.fr","Lagare","Jean", AccountType.PLATINIUM, new DateTime().minusDays(4));
         return client;
     }
 
-    private static Client createInactifUser() {
+    private Client createInactifUser() {
         Client client = new Client("inactif@monsite.fr","Durand","Marc", AccountType.STANDART);
         return client;
     }

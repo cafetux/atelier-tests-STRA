@@ -1,7 +1,8 @@
 package com.strator.communaute.catalogue.repository;
 
 import com.strator.communaute.catalogue.model.ProduitCatalogue;
-import com.strator.communaute.data.HardCodedDataBase;
+import com.strator.communaute.data.IDataBase;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -12,16 +13,18 @@ import java.util.List;
 @Repository
 public class StubCatalogueProduits implements CatalogueProduits {
 
+    @Autowired
+    private IDataBase database;
 
 
     @Override
     public List<ProduitCatalogue> retrieveAll() {
-        return HardCodedDataBase.getProduits();
+        return database.getProduits();
     }
 
     @Override
     public ProduitCatalogue get(String reference) {
-        return HardCodedDataBase.getProduit(reference);
+        return database.getProduit(reference);
     }
 
 }

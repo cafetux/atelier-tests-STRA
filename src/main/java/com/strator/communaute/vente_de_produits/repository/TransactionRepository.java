@@ -1,6 +1,8 @@
 package com.strator.communaute.vente_de_produits.repository;
 
+import com.strator.communaute.data.IDataBase;
 import com.strator.communaute.vente_de_produits.model.Commande;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -9,9 +11,13 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class TransactionRepository {
 
+    @Autowired
+    private IDataBase database;
 
-    public void save(Commande operationDeVente){
-         System.out.println(operationDeVente);
+    public void save(Commande operationDeVente)
+    {
+        database.saveOrder(operationDeVente);
+        System.out.println(operationDeVente);
     }
 
 }

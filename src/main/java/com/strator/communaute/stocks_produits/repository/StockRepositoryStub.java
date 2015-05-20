@@ -1,7 +1,8 @@
 package com.strator.communaute.stocks_produits.repository;
 
 import com.strator.communaute.catalogue.model.ProduitCatalogue;
-import com.strator.communaute.data.HardCodedDataBase;
+import com.strator.communaute.data.IDataBase;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -10,24 +11,27 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class StockRepositoryStub implements StockRepository {
 
+    @Autowired
+    private IDataBase database;
+
     @Override
     public void ajouterAuStock(ProduitCatalogue produit, int quantite){
-        System.out.println("Stock: Ajout de " + quantite + " "+produit);
-        int stock=HardCodedDataBase.getStock(produit.getReference());
+        System.out.println("Stock: Ajout de " + quantite + " '"+produit.getLibelle()+"'");
+        int stock= database.getStock(produit.getReference());
         int newStock = stock + quantite;
-        HardCodedDataBase.changeStock(produit.getReference(), newStock);
+        database.changeStock(produit.getReference(), newStock);
 
-        System.out.println("Stock: stock mis à jour pour le produit " +produit +" : "+stock+quantite);
+        System.out.println("Stock: stock mis à jour pour le produit '" +produit.getLibelle() +"' : "+stock+quantite);
     }
 
     @Override
     public void enleverDuStock(ProduitCatalogue produit, int quantite){
-        System.out.println("Stock: On enleve " + quantite + " "+produit);
-        int stock=HardCodedDataBase.getStock(produit.getReference());
+        System.out.println("Stock: On enleve " + quantite + " '"+produit.getLibelle()+"'");
+        int stock= database.getStock(produit.getReference());
         int newStock = stock - quantite;
-        HardCodedDataBase.changeStock(produit.getReference(), newStock);
+        database.changeStock(produit.getReference(), newStock);
 
-        System.out.println("Stock: stock mis à jour pour le produit " +produit +" : "+stock+quantite);
+        System.out.println("Stock: stock mis à jour pour le produit '" +produit.getLibelle() +"' : "+stock+quantite);
     }
 
 }
