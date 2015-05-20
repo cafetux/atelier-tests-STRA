@@ -16,7 +16,7 @@ public class TransactionRepository {
 
     public void save(Commande operationDeVente)
     {
-        database.saveOrder(operationDeVente);
+        database.save(operationDeVente);
         System.out.println(operationDeVente);
     }
 

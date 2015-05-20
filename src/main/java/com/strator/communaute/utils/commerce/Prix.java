@@ -42,6 +42,9 @@ public class Prix {
         return new Prix(percentage.applyToDecrease(this.prix));
     }
 
+    public long toCents(){
+        return this.prix.multiply(CENT).longValue();
+    }
     @Override
     public String toString() {
         return "Prix{" +

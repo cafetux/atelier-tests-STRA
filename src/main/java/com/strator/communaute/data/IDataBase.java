@@ -2,6 +2,7 @@ package com.strator.communaute.data;
 
 import com.strator.communaute.catalogue.model.ProduitCatalogue;
 import com.strator.communaute.client.model.Client;
+import com.strator.communaute.programme_fidelite.model.ActionRecompensee;
 import com.strator.communaute.vente_de_produits.model.Commande;
 
 import java.util.List;
@@ -21,5 +22,7 @@ public interface IDataBase {
 
     Client getClient(String email);
 
-    void saveOrder(Commande operationDeVente);
+    void save(Commande operationDeVente);
+
+    void save(ActionRecompensee action);
 }

@@ -5,16 +5,16 @@ package com.strator.communaute.vente_de_produits.model;
  */
 public class LigneCommande {
 
-    private String reference;
+    private ProduitVendu produit;
     private int quantite;
 
-    public LigneCommande(String reference, int quantite) {
-        this.reference = reference;
+    public LigneCommande(ProduitVendu produit, int quantite) {
+        this.produit = produit;
         this.quantite = quantite;
     }
 
-    public String getReference() {
-        return reference;
+    public ProduitVendu getProduit() {
+        return produit;
     }
 
     public int getQuantite() {
@@ -24,7 +24,7 @@ public class LigneCommande {
     @Override
     public String toString() {
         return "LigneCommande{" +
-                "'" + reference + '\'' +
+                "'" + produit + '\'' +
                 " x " + quantite +
                 '}';
     }

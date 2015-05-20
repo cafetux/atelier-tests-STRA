@@ -1,4 +1,4 @@
-package com.strator.communaute.fidelite.model;
+package com.strator.communaute.programme_fidelite.model;
 
 import org.joda.time.DateTime;
 

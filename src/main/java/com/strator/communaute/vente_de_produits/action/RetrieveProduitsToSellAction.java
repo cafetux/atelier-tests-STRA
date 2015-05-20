@@ -8,7 +8,7 @@ import com.strator.communaute.client.exception.UserInactifException;
 import com.strator.communaute.client.model.AccountType;
 import com.strator.communaute.client.model.Client;
 import com.strator.communaute.utils.math.Percentage;
-import com.strator.communaute.vente_de_produits.model.ProduitToSell;
+import com.strator.communaute.vente_de_produits.model.ProduitAVendre;
 import com.strator.communaute.vente_de_produits.model.TvaType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -35,7 +35,7 @@ public class RetrieveProduitsToSellAction {
      * @param clientEmail l'email de l'utilisateur (qui l'identifie)
      * @return la liste des produits à vendre
      */
-    public List<ProduitToSell> retrieveAllFor(String clientEmail) {
+    public List<ProduitAVendre> retrieveAllFor(String clientEmail) {
 
         Client client = clientsMagasin.retrieveByEmail(clientEmail);
         if(!client.isActif()){
@@ -44,18 +44,18 @@ public class RetrieveProduitsToSellAction {
 
         List<ProduitCatalogue> catalogue = produitsRepository.retrieveAll();
 
-        ArrayList<ProduitToSell> produitToSells = new ArrayList<ProduitToSell>();
+        ArrayList<ProduitAVendre> produitAVendres = new ArrayList<ProduitAVendre>();
         for (ProduitCatalogue produitCatalogue : catalogue) {
             if(produitCatalogue.isActif()){
-                ProduitToSell produitToSell = convertToProduitToSell(client, produitCatalogue);
-                produitToSells.add(produitToSell);
+                ProduitAVendre produitAVendre = convertToProduitToSell(client, produitCatalogue);
+                produitAVendres.add(produitAVendre);
             }
         }
 
-        return produitToSells;
+        return produitAVendres;
     }
 
-    private ProduitToSell convertToProduitToSell(Client client, ProduitCatalogue produitCatalogue) {
+    private ProduitAVendre convertToProduitToSell(Client client, ProduitCatalogue produitCatalogue) {
         Prix prixDeVenteHT =produitCatalogue.getPrixAchat().plus(produitCatalogue.getMarge());
         TvaType typeTva;
         switch(produitCatalogue.getCategorieProduit()){
@@ -108,7 +108,7 @@ public class RetrieveProduitsToSellAction {
             discountInPercentage+=5;
         }
         Prix prixAPayer = prixDeVenteTTC.decreaseBy(new Percentage(discountInPercentage));
-        return new ProduitToSell(produitCatalogue.getReference(),produitCatalogue.getLibelle(),prixDeVenteHT,prixDeVenteTTC,prixAPayer);
+        return new ProduitAVendre(produitCatalogue.getReference(),produitCatalogue.getLibelle(),prixDeVenteHT,prixDeVenteTTC,prixAPayer);
     }
 
 }

@@ -8,7 +8,7 @@ import com.strator.communaute.catalogue.model.CategorieProduit;
 import com.strator.communaute.catalogue.model.ProduitCatalogue;
 import com.strator.communaute.client.model.AccountType;
 import com.strator.communaute.client.model.Client;
-import com.strator.communaute.fidelite.model.ActionRecompensee;
+import com.strator.communaute.programme_fidelite.model.ActionRecompensee;
 import com.strator.communaute.utils.commerce.Prix;
 import com.strator.communaute.vente_de_produits.model.Commande;
 import org.joda.time.DateTime;
@@ -85,8 +85,13 @@ public class HardCodedDataBase implements IDataBase {
     }
 
     @Override
-    public void saveOrder(Commande commande) {
+    public void save(Commande commande) {
        commandes.put(commande.getClientEmail(),commande);
+    }
+
+    @Override
+    public void save(ActionRecompensee action) {
+        actionsFidelite.add(action);
     }
 
 

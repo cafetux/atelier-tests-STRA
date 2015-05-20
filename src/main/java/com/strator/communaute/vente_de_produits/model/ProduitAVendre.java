@@ -5,7 +5,7 @@ import com.strator.communaute.utils.commerce.Prix;
 /**
  * Un produit à vendre
  */
-public class ProduitToSell {
+public class ProduitAVendre {
 
 
     /**
@@ -30,7 +30,7 @@ public class ProduitToSell {
      */
     private Prix prixTTCRemise;
 
-    public ProduitToSell(String reference, String libelle, Prix prixHT, Prix prixTTC, Prix prixTTCRemise) {
+    public ProduitAVendre(String reference, String libelle, Prix prixHT, Prix prixTTC, Prix prixTTCRemise) {
         this.reference = reference;
         this.libelle = libelle;
         this.prixHT = prixHT;
