@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 public class PercentageTest {
 
 
-    public static final BigDecimal TWENTY = new BigDecimal(20);
+    public static final BigDecimal TWENTY = new BigDecimal("20.00");
     public static final BigDecimal TWO_HUNDRED = new BigDecimal(200);
 
     @Test

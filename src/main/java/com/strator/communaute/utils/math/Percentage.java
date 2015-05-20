@@ -23,7 +23,7 @@ public class Percentage {
      * @return la valeur partielle
      */
     public BigDecimal applyToRetrievePartialValueOf(BigDecimal valeurInitiale){
-        return valeurInitiale.multiply(rate);
+        return valeurInitiale.multiply(rate).setScale(2,BigDecimal.ROUND_FLOOR);
     }
 
     /**
