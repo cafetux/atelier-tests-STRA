@@ -26,7 +26,7 @@ public class ProduitAVendre {
     private Prix prixTTC;
 
     /**
-     *  La remise à appliquer sur le prix de vente TTC du produit
+     *  Le prix de vente TTC du produit remisé
      */
     private Prix prixTTCRemise;
 

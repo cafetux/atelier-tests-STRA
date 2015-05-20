@@ -14,7 +14,7 @@ public class Percentage {
 
     public Percentage(double percentage){
         Preconditions.checkArgument(percentage>=0 && percentage<=100,"percentage must be between 0 and 100 (included)");
-        this.rate=new BigDecimal(percentage);
+        this.rate=new BigDecimal(percentage/100);
     }
 
     /**
@@ -23,7 +23,7 @@ public class Percentage {
      * @return la valeur partielle
      */
     public BigDecimal applyToRetrievePartialValueOf(BigDecimal valeurInitiale){
-        return valeurInitiale.multiply(rate).divide(CENT,BigDecimal.ROUND_CEILING);
+        return valeurInitiale.multiply(rate);
     }
 
     /**
@@ -32,7 +32,7 @@ public class Percentage {
      * @return la valeur partielle ajoutée à la valeur initiale
      */
     public BigDecimal applyToIncrease(BigDecimal valeurInitiale){
-        return valeurInitiale.multiply(rate).add(applyToRetrievePartialValueOf(valeurInitiale));
+        return valeurInitiale.add(applyToRetrievePartialValueOf(valeurInitiale));
     }
 
     /**
@@ -41,7 +41,7 @@ public class Percentage {
      * @return la valeur partielle retranchée à la valeur initiale
      */
     public BigDecimal applyToDecrease(BigDecimal valeurInitiale){
-        return valeurInitiale.multiply(rate).subtract(applyToRetrievePartialValueOf(valeurInitiale));
+        return valeurInitiale.subtract(applyToRetrievePartialValueOf(valeurInitiale));
     }
 
 
