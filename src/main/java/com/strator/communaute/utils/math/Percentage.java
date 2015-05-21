@@ -44,5 +44,27 @@ public class Percentage {
         return valeurInitiale.subtract(applyToRetrievePartialValueOf(valeurInitiale));
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
+        Percentage that = (Percentage) o;
+
+        if (rate != null ? !rate.equals(that.rate) : that.rate != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return rate != null ? rate.hashCode() : 0;
+    }
+
+    @Override
+    public String toString() {
+        return "Percentage{" +
+                "rate=" + rate +
+                '}';
+    }
 }

@@ -25,4 +25,5 @@ public interface IDataBase {
     void save(Commande operationDeVente);
 
     void save(ActionRecompensee action);
+
 }

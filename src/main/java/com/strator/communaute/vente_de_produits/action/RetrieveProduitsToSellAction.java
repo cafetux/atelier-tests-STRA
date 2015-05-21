@@ -1,22 +1,17 @@
 package com.strator.communaute.vente_de_produits.action;
 
-import com.strator.communaute.client.repository.ClientsMagasin;
-import com.strator.communaute.utils.commerce.Prix;
 import com.strator.communaute.catalogue.model.ProduitCatalogue;
 import com.strator.communaute.catalogue.repository.CatalogueProduits;
 import com.strator.communaute.client.exception.UserInactifException;
-import com.strator.communaute.client.model.AccountType;
 import com.strator.communaute.client.model.Client;
-import com.strator.communaute.utils.math.Percentage;
+import com.strator.communaute.client.repository.ClientsMagasin;
+import com.strator.communaute.vente_de_produits.converter.ProduitCatalogueToProduitAVendre;
 import com.strator.communaute.vente_de_produits.model.ProduitAVendre;
-import com.strator.communaute.vente_de_produits.model.TvaType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.strator.communaute.vente_de_produits.model.TvaType.*;
 
 /**
  * Action pour retrouver les produits à vendre
@@ -29,6 +24,9 @@ public class RetrieveProduitsToSellAction {
 
     @Autowired
     private ClientsMagasin clientsMagasin;
+
+    @Autowired
+    private ProduitCatalogueToProduitAVendre converter;
 
     /**
      * Renvoie les produits à vendre et leurs caractéristiques (pour un client donné)
@@ -47,64 +45,16 @@ public class RetrieveProduitsToSellAction {
         ArrayList<ProduitAVendre> produitAVendres = new ArrayList<ProduitAVendre>();
         for (ProduitCatalogue produitCatalogue : catalogue) {
             if(produitCatalogue.isActif()){
-                Prix prixDeVenteHT =produitCatalogue.getPrixAchat().plus(produitCatalogue.getMarge());
-                TvaType typeTva;
-                switch(produitCatalogue.getCategorieProduit()){
-
-                    case PRESERVATIF:
-                        typeTva= REDUITE;
-                        break;
-                    case MEDICAMENT_NON_REMBOURSABLE:
-                        typeTva= INTERMEDIAIRE;
-                        break;
-                    case MEDICAMENT_REMBOURSABLE:
-                        typeTva= PARTICULIERE;
-                        break;
-                    case LIVRE:
-                        typeTva= REDUITE;
-                        break;
-                    case EQUIPEMENT_PERSONNE_DEPENDANTE:
-                        typeTva= REDUITE;
-                        break;
-                    case HYGIENE_DENTAIRE:
-                        typeTva= NORMALE;
-                        break;
-                    case CONFISERIE:
-                        typeTva= NORMALE;
-                        break;
-                    default:
-                        throw new IllegalArgumentException("no TVA type found for product of type "+produitCatalogue.getCategorieProduit());
-                }
-                Percentage tvaRate;
-                switch (typeTva){
-
-                    case NORMALE:
-                        tvaRate=new Percentage(20);
-                        break;
-                    case INTERMEDIAIRE:
-                        tvaRate=new Percentage(10);
-                        break;
-                    case REDUITE:
-                        tvaRate=new Percentage(5.5);
-                        break;
-                    case PARTICULIERE:
-                        tvaRate=new Percentage(2.5);
-                        break;
-                    default:
-                        throw new IllegalArgumentException("no TVA rate found for this TvaType "+typeTva);
-                }
-                Prix prixDeVenteTTC = prixDeVenteHT.increaseBy(tvaRate);
-                double discountInPercentage = 0.0;
-                if(client.getAccountType()== AccountType.PLATINIUM){
-                    discountInPercentage+=5;
-                }
-                Prix prixAPayer = prixDeVenteTTC.decreaseBy(new Percentage(discountInPercentage));
-                produitAVendres.add(new ProduitAVendre(produitCatalogue.getReference(),produitCatalogue.getLibelle(),prixDeVenteHT,prixDeVenteTTC,prixAPayer));
+                ProduitAVendre produitAVendre = converter.convert(client, produitCatalogue);
+                produitAVendres.add(produitAVendre);
             }
         }
 
         return produitAVendres;
     }
+
+
+
 
 
 }

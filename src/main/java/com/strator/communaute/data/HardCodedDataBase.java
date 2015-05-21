@@ -96,7 +96,7 @@ public class HardCodedDataBase implements IDataBase {
 
 
     private Client createStandartClient() {
-        Client client = new Client("normal@monsite.fr","LeGrand","Paul", AccountType.STANDART, new DateTime().minusDays(8));
+        Client client = new Client("normal@monsite.fr","LeGrand","Paul", AccountType.STANDARD, new DateTime().minusDays(8));
         return client;
     }
     private Client createVipUser() {
@@ -105,9 +105,16 @@ public class HardCodedDataBase implements IDataBase {
     }
 
     private Client createInactifUser() {
-        Client client = new Client("inactif@monsite.fr","Durand","Marc", AccountType.STANDART);
+        Client client = new Client("inactif@monsite.fr","Durand","Marc", AccountType.STANDARD);
         return client;
     }
 
 
+    public void cleanDatas(){
+        produitCatalogues.clear();
+        stockProduits.clear();
+        actionsFidelite.clear();
+        clients.clear();
+        commandes.clear();
+    }
 }

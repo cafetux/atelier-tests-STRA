@@ -1,5 +1,7 @@
 package com.strator.communaute.vente_de_produits.model;
 
+import com.strator.communaute.utils.math.Percentage;
+
 /**
  * Types de com.strator.communaute.TVA applicables
  * http://www.economie.gouv.fr/cedef/taux-tva-france-et-union-europeenne
@@ -10,7 +12,7 @@ public enum TvaType {
      * il s'applique à tous les produits ou services pour lesquels aucun autre taux n'est expressément prévu
      *
      */
-    NORMALE,
+    NORMALE(new Percentage(20)),
     /**
      * applicable aux produits agricoles non transformés,
      * au bois de chauffage, aux transports de voyageurs,
@@ -19,7 +21,7 @@ public enum TvaType {
      * il concerne les biens et prestations de services qui relevaient du taux de 5,5 %
      * avant le 1er janvier 2012 à l’exception de certains biens et services limitativement énumérés par l’article 278-0 bis du CGI
      */
-    INTERMEDIAIRE,
+    INTERMEDIAIRE(new Percentage(10)),
     /**
      * les produits alimentaires,
      * équipements et services pour handicapés, abonnements gaz et électricité,
@@ -27,12 +29,20 @@ public enum TvaType {
      * livres sur tout support, billeterie de spectacle vivant, logements sociaux et travaux d’amélioration de la qualité énergétique des logements,
      * livraisons d'œuvres d'art effectuées par leur auteur ou ses ayants droit.
      */
-    REDUITE,
+    REDUITE(new Percentage(5.5)),
     /**
      *  réservé aux médicaments remboursables par la sécurité sociale, aux ventes d’animaux vivants de boucherie et de charcuterie à des non assujettis,
      *  à la redevance télévision, à certains spectacles et aux publications de presse inscrites à la Commission paritaire des publications et agences de presse
      */
-    PARTICULIERE
+    PARTICULIERE(new Percentage(2.5))
     ;
+    private final Percentage rate;
 
+    TvaType(Percentage percentage) {
+        this.rate=percentage;
+    }
+
+    public Percentage getRate() {
+        return rate;
+    }
 }

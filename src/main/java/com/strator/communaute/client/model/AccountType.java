@@ -7,7 +7,7 @@ public enum AccountType {
     /**
      * Utilisateur basique (compte par défaut)
      */
-    STANDART,
+    STANDARD,
     /**
      * Acheteur récurent
      */
