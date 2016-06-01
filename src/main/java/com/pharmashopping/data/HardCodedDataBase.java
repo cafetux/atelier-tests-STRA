@@ -43,9 +43,12 @@ public class HardCodedDataBase implements IDataBase {
         add(produit("1fc6846dde361645fb2cd05f1133c7d4", "Se soigner avec les plantes (des pieds)", 1050, true, 400, CategorieProduit.LIVRE),2);
         add(produit("8e5cfaee57c942a8b8304bfdb68b6014", "Pastilles vichy", 1260, true, 705, CategorieProduit.CONFISERIE),9);
 
-        clients.put(createInactifUser().getEmail(),createInactifUser());
-        clients.put(createStandartClient().getEmail(),createStandartClient());
-        clients.put(createVipUser().getEmail(),createVipUser());
+        Client inactifUser = createInactifUser();
+        clients.put(inactifUser.getEmail(), inactifUser);
+        Client standartClient = createStandartClient();
+        clients.put(standartClient.getEmail(), standartClient);
+        Client vipUser = createVipUser();
+        clients.put(vipUser.getEmail(), vipUser);
     }
 
     private void add(ProduitCatalogue produit, int stock) {
