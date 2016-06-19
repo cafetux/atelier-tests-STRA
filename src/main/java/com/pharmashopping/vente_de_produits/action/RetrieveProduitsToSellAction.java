@@ -2,7 +2,7 @@ package com.pharmashopping.vente_de_produits.action;
 
 import com.pharmashopping.catalogue.model.ProduitCatalogue;
 import com.pharmashopping.catalogue.repository.CatalogueProduits;
-import com.pharmashopping.catalogue.repository.StubCatalogueProduits;
+import com.pharmashopping.catalogue.repository.LocalCatalogueProduits;
 import com.pharmashopping.client.exception.UserInactifException;
 import com.pharmashopping.client.model.Client;
 import com.pharmashopping.client.repository.ClientsMagasin;
@@ -23,12 +23,11 @@ import java.util.List;
 @Component
 public class RetrieveProduitsToSellAction {
 
-    @Autowired
     private CatalogueProduits produitsRepository;
 
 
     public RetrieveProduitsToSellAction(){
-        this.produitsRepository = new StubCatalogueProduits();
+        this.produitsRepository = LocalCatalogueProduits.get();
     }
 
 
