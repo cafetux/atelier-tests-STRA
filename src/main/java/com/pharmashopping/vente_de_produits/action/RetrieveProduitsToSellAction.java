@@ -48,59 +48,59 @@ public class RetrieveProduitsToSellAction {
         ArrayList<ProduitAVendre> produitAVendres = new ArrayList<ProduitAVendre>();
         for (ProduitCatalogue produitCatalogue : catalogue) {
             if(produitCatalogue.isActif()){
-                Prix prixDeVenteHT =produitCatalogue.getPrixAchat().plus(produitCatalogue.getMarge());
-                TvaType typeTva;
+                Prix pht =produitCatalogue.getPrixAchat().plus(produitCatalogue.getMarge());
+                TvaType tvat;
                 switch(produitCatalogue.getCategorieProduit()){
 
                     case PRESERVATIF:
-                        typeTva= TvaType.REDUITE;
+                        tvat= TvaType.REDUITE;
                         break;
                     case MEDICAMENT_NON_REMBOURSABLE:
-                        typeTva= TvaType.INTERMEDIAIRE;
+                        tvat= TvaType.INTERMEDIAIRE;
                         break;
                     case MEDICAMENT_REMBOURSABLE:
-                        typeTva= TvaType.PARTICULIERE;
+                        tvat= TvaType.PARTICULIERE;
                         break;
                     case LIVRE:
-                        typeTva= TvaType.REDUITE;
+                        tvat= TvaType.REDUITE;
                         break;
                     case EQUIPEMENT_PERSONNE_DEPENDANTE:
-                        typeTva= TvaType.REDUITE;
+                        tvat= TvaType.REDUITE;
                         break;
                     case HYGIENE_DENTAIRE:
-                        typeTva= TvaType.NORMALE;
+                        tvat= TvaType.NORMALE;
                         break;
                     case CONFISERIE:
-                        typeTva= TvaType.NORMALE;
+                        tvat= TvaType.NORMALE;
                         break;
                     default:
                         throw new IllegalArgumentException("no TVA type found for product of type "+produitCatalogue.getCategorieProduit());
                 }
-                Percentage tvaRate;
-                switch (typeTva){
+                Percentage tvar;
+                switch (tvat){
 
                     case NORMALE:
-                        tvaRate=new Percentage(20);
+                        tvar=new Percentage(20);
                         break;
                     case INTERMEDIAIRE:
-                        tvaRate=new Percentage(10);
+                        tvar=new Percentage(10);
                         break;
                     case REDUITE:
-                        tvaRate=new Percentage(5.5);
+                        tvar=new Percentage(5.5);
                         break;
                     case PARTICULIERE:
-                        tvaRate=new Percentage(2.5);
+                        tvar=new Percentage(2.5);
                         break;
                     default:
-                        throw new IllegalArgumentException("no TVA rate found for this TvaType "+typeTva);
+                        throw new IllegalArgumentException("no TVA rate found for this TvaType "+tvat);
                 }
-                Prix prixDeVenteTTC = prixDeVenteHT.increaseBy(tvaRate);
-                double discountInPercentage = 0.0;
+                Prix ptc = new Prix(tvar.applyToIncrease(pht.getValue()));
+                double discInPerc = 0.0;
                 if(client.getAccountType()== AccountType.PLATINIUM){
-                    discountInPercentage+=5;
+                    discInPerc+=5;
                 }
-                Prix prixAPayer = prixDeVenteTTC.decreaseBy(new Percentage(discountInPercentage));
-                produitAVendres.add(new ProduitAVendre(produitCatalogue.getReference(),produitCatalogue.getLibelle(),prixDeVenteHT,prixDeVenteTTC,prixAPayer));
+                Prix price = new Prix(new Percentage(discInPerc).applyToDecrease(ptc.getValue()));
+                produitAVendres.add(new ProduitAVendre(produitCatalogue.getReference(),produitCatalogue.getLibelle(),pht,ptc,price));
             }
         }
 

@@ -24,24 +24,6 @@ public class Prix {
         return new Prix(prix.add(montant.prix));
     }
 
-    /**
-     *
-     * @param percentage le pourcentage à appliquer au prix pour l'augmenter
-     * @return le prix augmenté de x%
-     */
-    public Prix increaseBy(Percentage percentage) {
-        return new Prix(percentage.applyToIncrease(this.prix));
-    }
-
-    /**
-     *
-     * @param percentage le pourcentage à appliquer au prix pour le diminuer
-     * @return le prix diminué de x%
-     */
-    public Prix decreaseBy(Percentage percentage) {
-        return new Prix(percentage.applyToDecrease(this.prix));
-    }
-
     public long toCents(){
         return this.prix.multiply(CENT).longValue();
     }
@@ -50,5 +32,9 @@ public class Prix {
         return "Prix{" +
                 "prix=" + prix +
                 '}';
+    }
+
+    public BigDecimal getValue() {
+        return prix;
     }
 }
