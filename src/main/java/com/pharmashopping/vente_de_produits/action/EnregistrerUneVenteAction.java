@@ -3,13 +3,13 @@ package com.pharmashopping.vente_de_produits.action;
 import com.pharmashopping.catalogue.repository.CatalogueProduits;
 import com.pharmashopping.client.exception.UserInactifException;
 import com.pharmashopping.client.model.Client;
+import com.pharmashopping.client.repository.ClientsMagasin;
 import com.pharmashopping.programme_fidelite.FideliteDao;
 import com.pharmashopping.programme_fidelite.model.ActionRecompensee;
 import com.pharmashopping.vente_de_produits.model.Commande;
 import com.pharmashopping.vente_de_produits.repository.TransactionRepository;
 import com.pharmashopping.catalogue.exception.ProduitInconnuException;
 import com.pharmashopping.catalogue.model.ProduitCatalogue;
-import com.pharmashopping.client.repository.ClientsMagasin;
 import com.pharmashopping.stocks_produits.repository.StockRepository;
 import com.pharmashopping.vente_de_produits.model.LigneCommande;
 import com.pharmashopping.vente_de_produits.model.ProduitVendu;
@@ -26,8 +26,6 @@ import java.util.Map;
 @Component
 public class EnregistrerUneVenteAction {
 
-    @Autowired
-    private ClientsMagasin clientsMagasin;
 
     @Autowired
     private CatalogueProduits catalogueProduits;
@@ -48,7 +46,7 @@ public class EnregistrerUneVenteAction {
      */
     public void enregistrerUneVenteOuUnRetour(String clientEmail, Map<ProduitVendu,Integer> produits, boolean retour){
             BigDecimal cumulCommande =BigDecimal.ZERO;
-            Client client = clientsMagasin.retrieveByEmail(clientEmail);
+            Client client = ClientsMagasin.retrieveByEmail(clientEmail);
             if (!client.isActif()) {
                 throw new UserInactifException(client);
             }

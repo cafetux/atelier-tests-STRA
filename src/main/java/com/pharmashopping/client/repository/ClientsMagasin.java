@@ -1,13 +1,21 @@
 package com.pharmashopping.client.repository;
 
 import com.pharmashopping.client.model.Client;
+import com.pharmashopping.data.HardCodedDataBase;
+import com.pharmashopping.data.IDataBase;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 /**
- * Manipule les clients du Magasin
+ * Un stub renvoyant des clients prédéfinis
  */
-public interface ClientsMagasin {
+public class ClientsMagasin {
 
 
-    Client retrieveByEmail(String email);
+    private static IDataBase database = new HardCodedDataBase();
+
+    public static Client retrieveByEmail(String email) {
+        return database.getClient(email);
+    }
 
 }

@@ -2,12 +2,13 @@ package com.pharmashopping.vente_de_produits.action;
 
 import com.pharmashopping.catalogue.model.ProduitCatalogue;
 import com.pharmashopping.catalogue.repository.CatalogueProduits;
+import com.pharmashopping.catalogue.repository.StubCatalogueProduits;
 import com.pharmashopping.client.exception.UserInactifException;
 import com.pharmashopping.client.model.Client;
+import com.pharmashopping.client.repository.ClientsMagasin;
 import com.pharmashopping.utils.commerce.Prix;
 import com.pharmashopping.utils.math.Percentage;
 import com.pharmashopping.vente_de_produits.model.TvaType;
-import com.pharmashopping.client.repository.ClientsMagasin;
 import com.pharmashopping.client.model.AccountType;
 import com.pharmashopping.vente_de_produits.model.ProduitAVendre;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +26,11 @@ public class RetrieveProduitsToSellAction {
     @Autowired
     private CatalogueProduits produitsRepository;
 
-    @Autowired
-    private ClientsMagasin clientsMagasin;
+
+    public RetrieveProduitsToSellAction(){
+        this.produitsRepository = new StubCatalogueProduits();
+    }
+
 
     /**
      * Renvoie les produits à vendre et leurs caractéristiques (pour un client donné)
@@ -35,7 +39,7 @@ public class RetrieveProduitsToSellAction {
      */
     public List<ProduitAVendre> retrieveAllFor(String clientEmail) {
 
-        Client client = clientsMagasin.retrieveByEmail(clientEmail);
+        Client client = ClientsMagasin.retrieveByEmail(clientEmail);
         if(!client.isActif()){
             throw new UserInactifException(client);
         }
