@@ -102,7 +102,7 @@ public class HardCodedDataBase implements IDataBase {
     private void connection() {
         try {
             Thread.sleep(1500);
-            if(random.nextBoolean() || !random.nextBoolean()){
+            if(random.nextBoolean() & !random.nextBoolean()){
                 throw new RuntimeException("Cannot connect to database, error: "+Math.abs(random.nextInt()));
             }
         } catch (InterruptedException e) {
