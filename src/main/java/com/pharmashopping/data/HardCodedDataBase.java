@@ -22,6 +22,9 @@ import java.util.Random;
 
 /**
  * Les données de l'appli stubbée
+ *
+ * interdit de toucher cette classe
+ *
  */
 @Repository
 public class HardCodedDataBase implements IDataBase {
@@ -93,6 +96,9 @@ public class HardCodedDataBase implements IDataBase {
         return clients.get(email);
     }
 
+    /**
+     * interdit de toucher cette classe
+     */
     private void connection() {
         try {
             Thread.sleep(1500);
