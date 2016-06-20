@@ -51,57 +51,61 @@ public class EnregistrerUneVenteAction {
                 throw new UserInactifException(client);
             }
 
-            if (!retour) {
-                Commande opv = new Commande(clientEmail);
-                for (Map.Entry<ProduitVendu, Integer> produitToSellQuantityEntry : produits.entrySet()) {
-                    opv.addRerenceProduit(new LigneCommande(produitToSellQuantityEntry.getKey(),produitToSellQuantityEntry.getValue()));
-                }
-                int nbArticlesAchetes=0;
-                int nbPaliers10Euros=0;
-                for (LigneCommande ligneCommande : opv.getProduitsAchetes()) {
-                    ProduitCatalogue produit = catalogueProduits.get(ligneCommande.getProduit().getReference());
-                    if(produit!=null){
-                        stockRepository.enleverDuStock(produit,ligneCommande.getQuantite());
-                        nbArticlesAchetes+=ligneCommande.getQuantite();
-                        ProduitVendu produitAVendre =null;
-                        for (ProduitVendu toSell : produits.keySet()) {
-                            if(toSell.getReference().equals(produit.getReference())){
-                                produitAVendre =toSell;
-                                break;
-                            }
-                        }
-                        cumulCommande = cumulCommande.add(produitAVendre.getPrixPaye().multiply(new BigDecimal(ligneCommande.getQuantite())));
-                        while(cumulCommande.compareTo(new BigDecimal("10"))==1) {
-                            nbPaliers10Euros+=1;
-                            cumulCommande=cumulCommande.subtract(new BigDecimal("10"));
-                        }
-                    }else {
-                        throw new ProduitInconnuException(ligneCommande.getProduit().getReference());
-                    }
-                }
-                ActionRecompensee action01=new ActionRecompensee(clientEmail,opv.getReference(),nbArticlesAchetes*1,new DateTime(), ActionRecompensee.TypeRecompense.ARTICLE);
-                fideliteDao.save(action01);
-                transactionRepository.save(opv);
+        process(clientEmail, produits, retour, cumulCommande);
 
-                ActionRecompensee action02=new ActionRecompensee(clientEmail,opv.getReference(),nbPaliers10Euros*2,new DateTime(), ActionRecompensee.TypeRecompense.PALIER_COMMANDE);
-                fideliteDao.save(action02);
+    }
 
-            } else{
-                Commande opv = new Commande(clientEmail);
-                // on ne peut retourner qu'un seul produit
-                Map.Entry<ProduitVendu, Integer> produitRetourne = produits.entrySet().iterator().next();
-                opv.addRerenceProduit(new LigneCommande(produitRetourne.getKey(),produitRetourne.getValue()));
-                for (LigneCommande ligneCommande : opv.getProduitsAchetes()) {
-                    ProduitCatalogue produit = catalogueProduits.get(ligneCommande.getProduit().getReference());
-
-                    if(produit!=null){
-                        stockRepository.ajouterAuStock(produit,ligneCommande.getQuantite());
-                    }else {
-                        throw new ProduitInconnuException(ligneCommande.getProduit().getReference());
-                    }
-                }
-                transactionRepository.save(opv);
+    private void process(String clientEmail, Map<ProduitVendu, Integer> produits, boolean retour, BigDecimal cumulCommande) {
+        if (!retour) {
+            Commande opv = new Commande(clientEmail);
+            for (Map.Entry<ProduitVendu, Integer> produitToSellQuantityEntry : produits.entrySet()) {
+                opv.addRerenceProduit(new LigneCommande(produitToSellQuantityEntry.getKey(),produitToSellQuantityEntry.getValue()));
             }
+            int nbArticlesAchetes=0;
+            int nbPaliers10Euros=0;
+            for (LigneCommande ligneCommande : opv.getProduitsAchetes()) {
+                ProduitCatalogue produit = catalogueProduits.get(ligneCommande.getProduit().getReference());
+                if(produit!=null){
+                    stockRepository.enleverDuStock(produit,ligneCommande.getQuantite());
+                    nbArticlesAchetes+=ligneCommande.getQuantite();
+                    ProduitVendu produitAVendre =null;
+                    for (ProduitVendu toSell : produits.keySet()) {
+                        if(toSell.getReference().equals(produit.getReference())){
+                            produitAVendre =toSell;
+                            break;
+                        }
+                    }
+                    cumulCommande = cumulCommande.add(produitAVendre.getPrixPaye().multiply(new BigDecimal(ligneCommande.getQuantite())));
+                    while(cumulCommande.compareTo(new BigDecimal("10"))==1) {
+                        nbPaliers10Euros+=1;
+                        cumulCommande=cumulCommande.subtract(new BigDecimal("10"));
+                    }
+                }else {
+                    throw new ProduitInconnuException(ligneCommande.getProduit().getReference());
+                }
+            }
+            ActionRecompensee action01=new ActionRecompensee(clientEmail,opv.getReference(),nbArticlesAchetes*1,new DateTime(), ActionRecompensee.TypeRecompense.ARTICLE);
+            fideliteDao.save(action01);
+            transactionRepository.save(opv);
 
+            ActionRecompensee action02=new ActionRecompensee(clientEmail,opv.getReference(),nbPaliers10Euros*2,new DateTime(), ActionRecompensee.TypeRecompense.PALIER_COMMANDE);
+            fideliteDao.save(action02);
+
+        } else {
+            Commande opv = new Commande(clientEmail);
+            // on ne peut retourner qu'un seul produit
+            Map.Entry<ProduitVendu, Integer> produitRetourne = produits.entrySet().iterator().next();
+            opv.addRerenceProduit(new LigneCommande(produitRetourne.getKey(),produitRetourne.getValue()));
+            for (LigneCommande ligneCommande : opv.getProduitsAchetes()) {
+                ProduitCatalogue produit = catalogueProduits.get(ligneCommande.getProduit().getReference());
+
+                if(produit!=null){
+                    stockRepository.ajouterAuStock(produit,ligneCommande.getQuantite());
+                } else {
+                    throw new ProduitInconnuException(ligneCommande.getProduit().getReference());
+                }
+            }
+            transactionRepository.save(opv);
+        }
     }
 }
