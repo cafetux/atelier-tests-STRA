@@ -10,7 +10,7 @@ Nous avons donc décidé d'innover et voulons ajouter les fonctionnalités suiva
  1. Une nouvelle catégorie de clients, reconnus pour être hypocondriaques, se verrons affecter une surfacturation de 3%
    afin de lutter contre le trou de la sécu.
 
- 2. Une nouvelle catégorie de produit nommée «hygiène corporelle» doit être disponible. Elle se verra affecter la
+ 2. Une nouvelle catégorie de produits nommée «hygiène corporelle» doit être disponible. Elle se verra affecter la
  nouvelle TVA Borlo de 4.2%.
 
  3. Le SAV reçoit régulièrement des produits que nous ne connaissons pas. Aujourd'hui, nous ne les gardons pas mais
